@@ -15,9 +15,6 @@ def get_treemenus_static_prefix():
     if django.VERSION >= (1, 3):
         from django.templatetags.static import PrefixNode
         return PrefixNode.handle_simple("STATIC_URL") + 'img/treemenus'
-    else:
-        from django.contrib.admin.templatetags.adminmedia import admin_media_prefix
-        return admin_media_prefix() + 'img/admin/'
 
 
 def show_menu(context, menu_name, menu_type=None):
@@ -27,16 +24,19 @@ def show_menu(context, menu_name, menu_type=None):
     if menu_type:
         context['menu_type'] = menu_type
     return context
-register.inclusion_tag('%s/menu.html' % APP_LABEL, takes_context=True)(show_menu)
+register.inclusion_tag('%s/menu.html' % APP_LABEL,
+                       takes_context=True)(show_menu)
 
 
 def show_menu_item(context, menu_item):
     if not isinstance(menu_item, MenuItem):
-        raise template.TemplateSyntaxError, 'Given argument must be a MenuItem object.'
+        raise template.TemplateSyntaxError,\
+            'Given argument must be a MenuItem object.'
 
     context['menu_item'] = menu_item
     return context
-register.inclusion_tag('%s/menu_item.html' % APP_LABEL, takes_context=True)(show_menu_item)
+register.inclusion_tag('%s/menu_item.html' % APP_LABEL,
+                       takes_context=True)(show_menu_item)
 
 
 class ReverseNamedURLNode(Node):
@@ -50,7 +50,8 @@ class ReverseNamedURLNode(Node):
         resolved_named_url = self.named_url.resolve(context)
         contents = u'url ' + resolved_named_url
 
-        urlNode = url(self.parser, Token(token_type=TOKEN_BLOCK, contents=contents))
+        urlNode = url(self.parser, Token(token_type=TOKEN_BLOCK,
+                                         contents=contents))
         return urlNode.render(context)
 
 
