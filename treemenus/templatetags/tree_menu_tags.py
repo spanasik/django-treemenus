@@ -28,12 +28,16 @@ register.inclusion_tag('%s/menu.html' % APP_LABEL,
                        takes_context=True)(show_menu)
 
 
-def show_menu_item(context, menu_item):
+def show_menu_item(context, menu_item, menu_item_type=None, children=False):
     if not isinstance(menu_item, MenuItem):
         raise template.TemplateSyntaxError,\
             'Given argument must be a MenuItem object.'
 
     context['menu_item'] = menu_item
+    if menu_item_type:
+        context['menu_item_type'] = menu_item_type
+    if children:
+        context['children'] = children
     return context
 register.inclusion_tag('%s/menu_item.html' % APP_LABEL,
                        takes_context=True)(show_menu_item)
