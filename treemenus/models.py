@@ -19,7 +19,7 @@ class MenuItem(models.Model):
     menu = models.ForeignKey('Menu', related_name='contained_items',
                              verbose_name=ugettext_lazy('menu'), null=True,
                              blank=True, editable=False)
-    icon = models.ImageField('icon', upload_to='menu_icons')
+    icon = models.ImageField('icon', upload_to='menu_icons', blank=True)
 
     def __unicode__(self):
         return self.caption
