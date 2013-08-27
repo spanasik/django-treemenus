@@ -20,6 +20,8 @@ class MenuItem(models.Model):
                              verbose_name=ugettext_lazy('menu'), null=True,
                              blank=True, editable=False)
     icon = models.ImageField('icon', upload_to='menu_icons', blank=True)
+    target_blank = models.BooleanField('open link in new window',
+                                       default=False)
 
     def __unicode__(self):
         return self.caption
